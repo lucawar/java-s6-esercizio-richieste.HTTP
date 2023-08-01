@@ -30,7 +30,6 @@ public class PrenotazioniService {
 		int userId = newPrenotazione.getUserId();
 		int postazioneId = newPrenotazione.getPostazioneId();
 		LocalDate dataPrenotazione = newPrenotazione.getData();
-
 		User user = utenteService.findById(userId)
 				.orElseThrow(() -> new IllegalArgumentException("Utente non trovato"));
 		Postazione postazione = postazioneService.findById(postazioneId)
@@ -43,7 +42,6 @@ public class PrenotazioniService {
 		}
 
 		int idPrenotazione = Math.abs(new Random().nextInt());
-
 		Prenotazione prenotazione = new Prenotazione(idPrenotazione, dataPrenotazione, postazione, user);
 		this.prenotazioni.add(prenotazione);
 

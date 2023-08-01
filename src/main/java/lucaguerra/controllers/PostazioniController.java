@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +38,12 @@ public class PostazioniController {
 	@GetMapping("/{postazioneId}")
 	public Postazione findById(@PathVariable int userId) throws Exception {
 		return postazioneService.findById(userId).orElseThrow(() -> new Exception("POSTAZIONE NON TROVATA"));
+	}
+
+	@GetMapping("/cerca")
+	public List<Postazione> searchPostazioniByTipoAndCitta(
+			@RequestParam(value = "tipoPostazione") String tipoPostazione,
+			@RequestParam(value = "citta") String citta) {
+		return postazioneService.searchByTipoandCitta(tipoPostazione, citta);
 	}
 }

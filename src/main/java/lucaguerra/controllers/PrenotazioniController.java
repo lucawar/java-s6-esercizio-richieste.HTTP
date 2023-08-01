@@ -40,9 +40,7 @@ public class PrenotazioniController {
 
 	@PostMapping("")
 	public ResponseEntity<Prenotazione> save(@RequestBody NewPrenotazioneBody body) {
-
 		Prenotazione prenotazione = prenotazioneService.save(body);
-
 		return ResponseEntity.status(HttpStatus.CREATED).body(prenotazione);
 
 	}

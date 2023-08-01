@@ -34,4 +34,15 @@ public class PostazioniService {
 		}
 		return Optional.ofNullable(p);
 	}
+
+	public List<Postazione> searchByTipoandCitta(String TipoPostazione, String citta) {
+		List<Postazione> risultato = new ArrayList<>();
+		for (Postazione postazione : postazioni) {
+			if (postazione.getTipoPostazione().toString().equalsIgnoreCase(TipoPostazione)
+					&& postazione.getCitta().equalsIgnoreCase(citta)) {
+				risultato.add(postazione);
+			}
+		}
+		return risultato;
+	}
 }
