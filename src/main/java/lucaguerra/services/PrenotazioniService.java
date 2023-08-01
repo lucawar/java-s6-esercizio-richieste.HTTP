@@ -36,9 +36,10 @@ public class PrenotazioniService {
 		Postazione postazione = postazioneService.findById(postazioneId)
 				.orElseThrow(() -> new IllegalArgumentException("Postazione non trovata"));
 
-		Optional<Prenotazione> dataPrenotazioneOccupata = findByFreeDate(dataPrenotazione);
-		if (dataPrenotazioneOccupata.isPresent()) {
-			throw new IllegalArgumentException("Data già prenotata per questa postazione");
+		for (Prenotazione prenotazione : prenotazioni) {
+			if (prenotazione.getDataPrenotazione().equals(dataPrenotazione)) {
+				throw new IllegalArgumentException("Data già prenotata per questa postazione");
+			}
 		}
 
 		int idPrenotazione = Math.abs(new Random().nextInt());
@@ -48,15 +49,6 @@ public class PrenotazioniService {
 
 		return prenotazione;
 
-	}
-
-	private Optional<Prenotazione> findByFreeDate(LocalDate dataPrenotazione) {
-		for (Prenotazione prenotazione : prenotazioni) {
-			if (prenotazione.getDataPrenotazione().equals(dataPrenotazione)) {
-				return Optional.of(prenotazione);
-			}
-		}
-		return Optional.empty();
 	}
 
 	public List<Prenotazione> getPrenotazione() {
