@@ -36,7 +36,7 @@ public class PrenotazioniService {
 		Postazione postazione = postazioneService.findById(postazioneId)
 				.orElseThrow(() -> new IllegalArgumentException("Postazione non trovata"));
 
-		Optional<Prenotazione> dataPrenotazioneOccupata = findByDate(dataPrenotazione);
+		Optional<Prenotazione> dataPrenotazioneOccupata = findByFreeDate(dataPrenotazione);
 		if (dataPrenotazioneOccupata.isPresent()) {
 			throw new IllegalArgumentException("Data già prenotata per questa postazione");
 		}
@@ -50,7 +50,7 @@ public class PrenotazioniService {
 
 	}
 
-	private Optional<Prenotazione> findByDate(LocalDate dataPrenotazione) {
+	private Optional<Prenotazione> findByFreeDate(LocalDate dataPrenotazione) {
 		for (Prenotazione prenotazione : prenotazioni) {
 			if (prenotazione.getDataPrenotazione().equals(dataPrenotazione)) {
 				return Optional.of(prenotazione);
