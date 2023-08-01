@@ -22,11 +22,6 @@ public class UsersController {
 	@Autowired
 	UsersService userService;
 
-	@GetMapping("/index")
-	public String index() {
-		return "pagina principale";
-	}
-
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public User saveUser(@RequestBody User body) {
