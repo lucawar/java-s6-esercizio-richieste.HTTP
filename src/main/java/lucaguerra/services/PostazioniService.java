@@ -1,48 +1,47 @@
 package lucaguerra.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lucaguerra.entities.NewPostazionePayload;
 import lucaguerra.entities.Postazione;
+import lucaguerra.exceptions.BadRequestException;
+import lucaguerra.exceptions.NotFoundException;
+import lucaguerra.repositories.PostazioniRepository;
 
 @Service
 public class PostazioniService {
 
-	private List<Postazione> postazioni = new ArrayList<>();
+//	private List<Postazione> postazioni = new ArrayList<>();
 
-	public Postazione save(Postazione postazione) {
-		Random rndm = new Random();
-		postazione.setId(rndm.nextInt());
-		this.postazioni.add(postazione);
-		return postazione;
+	@Autowired
+	PostazioniRepository postazioniRepository;
+
+	public Postazione save(NewPostazionePayload body) {
+		boolean disponibilita = body.isDisponibilita();
+		boolean postazioneDisp = postazioniRepository.findByDisponibilita(disponibilita).isPresent();
+		if (postazioneDisp) {
+			throw new BadRequestException("Una postazione con disponibilità " + disponibilita + " è già presente");
+		}
+		Postazione newPostazione = new Postazione(body.getDescrizione(), body.getNumerMaxOccupanti(),
+				body.isDisponibilita(), body.getTipoPostazione(), body.getCitta());
+		return postazioniRepository.save(newPostazione);
 	}
 
+	// TORNA LA LISTA DELLE POSTAZIONI
 	public List<Postazione> getPostazioni() {
-		return this.postazioni;
+		return postazioniRepository.findAll();
 	}
 
-	public Optional<Postazione> findById(int id) {
-		Postazione p = null;
-
-		for (Postazione postazione : postazioni) {
-			if (postazione.getId() == id)
-				p = postazione;
-		}
-		return Optional.ofNullable(p);
+	// CERCA UTENTE TRAMITE ID
+	public Postazione findById(int id) throws NotFoundException {
+		return postazioniRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 	}
 
-	public List<Postazione> searchByTipoandCitta(String TipoPostazione, String citta) {
-		List<Postazione> risultato = new ArrayList<>();
-		for (Postazione postazione : postazioni) {
-			if (postazione.getTipoPostazione().toString().equalsIgnoreCase(TipoPostazione)
-					&& postazione.getCitta().equalsIgnoreCase(citta)) {
-				risultato.add(postazione);
-			}
-		}
-		return risultato;
-	}
+//	public Optional<Postazione> searchByTipoAndCitta(String tipoPostazione, String citta) {
+//		TipoPostazione tipoPostazioneEnum = TipoPostazione.valueOf(tipoPostazione);
+//		return postazioniRepository.findByTipoPostazioneAndCitta(tipoPostazioneEnum, citta);
+//	}
 }

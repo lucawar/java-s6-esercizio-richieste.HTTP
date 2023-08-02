@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class NewPrenotazioneBody {
+public class NewPrenotazionePayload {
 
 	private int userId;
 	private int postazioneId;
