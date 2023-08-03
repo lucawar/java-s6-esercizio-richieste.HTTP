@@ -1,5 +1,6 @@
 package lucaguerra.exceptions;
 
+@SuppressWarnings("serial")
 public class NotFoundException extends RuntimeException {
 
 	public NotFoundException(String message) {
@@ -7,6 +8,6 @@ public class NotFoundException extends RuntimeException {
 	}
 
 	public NotFoundException(int id) {
-		super(id + " non trovato!");
+		super("Siamo spiacenti l'ID: " + id + " non è stato trovato");
 	}
 }

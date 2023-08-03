@@ -13,5 +13,5 @@ public class ErrorPayload {
 
 	private String message;
 	private Date timestamp;
-	private int internalCode;
+
 }

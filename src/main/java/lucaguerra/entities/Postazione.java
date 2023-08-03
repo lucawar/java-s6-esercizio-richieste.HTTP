@@ -23,16 +23,13 @@ public class Postazione {
 	private int id;
 	private String descrizione;
 	private int numerMaxOccupanti;
-	private boolean disponibilita;
 	private TipoPostazione tipoPostazione;
 	private String citta;
 
-	public Postazione(String descrizione, int numerMaxOccupanti, boolean disponibilita, TipoPostazione tipoPostazione,
-			String citta) {
+	public Postazione(String descrizione, int numerMaxOccupanti, TipoPostazione tipoPostazione, String citta) {
 
 		this.descrizione = descrizione;
 		this.numerMaxOccupanti = numerMaxOccupanti;
-		this.disponibilita = disponibilita;
 		this.tipoPostazione = tipoPostazione;
 		this.citta = citta;
 	}
