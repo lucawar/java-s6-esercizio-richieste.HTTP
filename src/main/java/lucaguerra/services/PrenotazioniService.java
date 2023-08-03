@@ -27,8 +27,8 @@ public class PrenotazioniService {
 	@Autowired
 	PrenotazioneRepository prenotazioneRepository;
 
-	// SALVA PRENOTAZIONE + ECCEZIONE SE VIENE PRENOTATA UNA POSTAZIONE GIA OCCUPATA
-	// DA UNA DATA
+	// SALVA PRENOTAZIONE + ECCEZIONI
+
 	public Prenotazione save(NewPrenotazionePayload body) {
 		int userId = body.getUserId();
 		int postazioneId = body.getPostazioneId();
